@@ -19,10 +19,6 @@ namespace FootballMatch
             DB db = new DB();
             db.openConnection();
 
-            SqliteCommand createCmd = new SqliteCommand("CREATE TABLE IF NOT EXISTS tournaments (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT); CREATE TABLE IF NOT EXISTS tournament_matches (id INTEGER PRIMARY KEY AUTOINCREMENT, tournament_name TEXT, match_info TEXT, score TEXT);", db.getConnection());
-            createCmd.ExecuteNonQuery();
-            createCmd.Dispose();
-
             SqliteCommand command = new SqliteCommand("SELECT name FROM tournaments", db.getConnection());
 
             using (SqliteDataReader reader = command.ExecuteReader())
