@@ -13,7 +13,9 @@ namespace FootballMatch
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (textBoxName.Text == "")
+            string tournamentName = textBoxName.Text.Trim();
+
+            if (tournamentName == "")
             {
                 MessageBox.Show("Введіть назву турніру!");
                 return;
@@ -23,7 +25,7 @@ namespace FootballMatch
             db.openConnection();
 
             SqliteCommand insertT = new SqliteCommand("INSERT INTO tournaments (name) VALUES (@name)", db.getConnection());
-            insertT.Parameters.AddWithValue("@name", textBoxName.Text);
+            insertT.Parameters.AddWithValue("@name", tournamentName);
             insertT.ExecuteNonQuery();
             insertT.Dispose();
 
