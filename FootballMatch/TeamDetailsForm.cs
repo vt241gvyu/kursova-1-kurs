@@ -44,7 +44,9 @@ namespace FootballMatch
 
         private void buttonAddPlayer_Click(object sender, EventArgs e)
         {
-            if (textBoxNewPlayer.Text == "")
+            string playerName = textBoxNewPlayer.Text.Trim();
+
+            if (playerName == "")
             {
                 MessageBox.Show("Введіть ім'я гравця!");
                 return;
@@ -55,7 +57,7 @@ namespace FootballMatch
 
             SqliteCommand insertPlayer = new SqliteCommand("INSERT INTO players (team_name, player_name) VALUES (@team, @player)", db.getConnection());
             insertPlayer.Parameters.AddWithValue("@team", currentTeam);
-            insertPlayer.Parameters.AddWithValue("@player", textBoxNewPlayer.Text);
+            insertPlayer.Parameters.AddWithValue("@player", playerName);
             insertPlayer.ExecuteNonQuery();
 
             db.closeConnection();
