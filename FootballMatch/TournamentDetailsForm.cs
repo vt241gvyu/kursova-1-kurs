@@ -155,7 +155,9 @@ namespace FootballMatch
 
         private void buttonEditTournamentName_Click(object sender, EventArgs e)
         {
-            if (textBoxNewName.Text == "")
+            string newName = textBoxNewName.Text.Trim();
+
+            if (newName == "")
             {
                 MessageBox.Show("Введіть нову назву турніру!");
                 return;
@@ -165,20 +167,20 @@ namespace FootballMatch
             db.openConnection();
 
             SqliteCommand updateT = new SqliteCommand("UPDATE tournaments SET name = @newName WHERE name = @oldName", db.getConnection());
-            updateT.Parameters.AddWithValue("@newName", textBoxNewName.Text);
+            updateT.Parameters.AddWithValue("@newName", newName);
             updateT.Parameters.AddWithValue("@oldName", currentTournament);
             updateT.ExecuteNonQuery();
             updateT.Dispose();
 
             SqliteCommand updateM = new SqliteCommand("UPDATE planned_matches SET tournament = @newName WHERE tournament = @oldName", db.getConnection());
-            updateM.Parameters.AddWithValue("@newName", textBoxNewName.Text);
+            updateM.Parameters.AddWithValue("@newName", newName);
             updateM.Parameters.AddWithValue("@oldName", currentTournament);
             updateM.ExecuteNonQuery();
             updateM.Dispose();
 
             db.closeConnection();
 
-            currentTournament = textBoxNewName.Text;
+            currentTournament = newName;
             labelName.Text = "🏆 " + currentTournament;
             textBoxNewName.Text = "";
             MessageBox.Show("Назву турніру успішно змінено!");
